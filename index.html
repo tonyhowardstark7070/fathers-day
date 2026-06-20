@@ -3,52 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise for Papa! 🎁</title>
+    <title>Surprise for Papa! ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f4f9f9; /* Clean, calm background */
+            background-color: #0d0d0d;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            position: relative;
             text-align: center;
-            color: #2c3e50;
         }
 
         .screen {
             display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
             width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            animation: popIn 0.5s ease-out forwards;
+            height: 100vh;
+            position: absolute;
+            padding: 20px;
         }
 
         .screen.active {
-            display: block;
+            display: flex;
+            animation: fadeIn 0.8s ease-in;
         }
 
-        h1, h2 {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
             margin-bottom: 20px;
-            color: #2c3e50;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #f1c40f;
+            font-size: 28px;
         }
 
-        .emoji-large {
-            font-size: 80px;
-            margin: 20px 0;
-            display: inline-block;
-            animation: float 2s ease-in-out infinite;
-        }
+        p { color: #ddd; }
 
         /* Buttons */
         .btn-group {
@@ -60,163 +67,280 @@
         }
 
         button {
-            padding: 15px 40px;
-            font-size: 22px;
-            font-weight: bold;
+            background: linear-gradient(45deg, #f39c12, #f1c40f);
+            color: #111;
             border: none;
-            border-radius: 50px;
+            padding: 12px 40px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            letter-spacing: 1px;
         }
 
-        .btn-yes {
-            background-color: #2ecc71; /* Positive Green */
-            color: white;
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
         }
 
         .btn-no {
-            background-color: #e74c3c; /* Red */
+            background: #e74c3c;
             color: white;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
-            position: relative;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
         }
 
-        button:active {
-            transform: scale(0.95);
+        .btn-no:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+            transform: none; /* No scaling so it dodges cleanly */
         }
 
-        /* Gift Selection Screen */
+        .btn-back {
+            margin-top: 40px;
+            background: transparent;
+            border: 2px solid #f1c40f;
+            color: #f1c40f;
+            box-shadow: none;
+        }
+
+        .btn-back:hover {
+            background: #f1c40f;
+            color: #111;
+        }
+
+        /* Gifts Container */
         .gifts-container {
             display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
         }
 
         .gift-box {
             font-size: 60px;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            backdrop-filter: blur(5px);
         }
 
         .gift-box:hover {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.1) translateY(-10px);
+            border-color: #f1c40f;
+            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
         }
 
-        /* Message Screen */
-        .message-text {
-            font-size: 20px;
-            line-height: 1.6;
-            color: #444;
+        /* Message Box */
+        .message-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
             text-align: left;
-            padding: 20px;
-            border-left: 5px solid #3498db; /* Elegant Blue */
-            background: #f8fbfb;
-            border-radius: 10px;
         }
 
-        /* Collage Screen */
+        .message-box p {
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        /* Collage */
         .collage {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            max-width: 500px;
             margin-top: 20px;
         }
 
         .collage img {
             width: 100%;
-            height: 150px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 15px;
-            border: 4px solid #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            border: 2px solid #f1c40f;
+            transition: 0.3s;
         }
 
-        /* Back Button */
-        .btn-back {
-            background: #3498db;
-            color: white;
-            margin-top: 30px;
-            font-size: 18px;
-            padding: 10px 30px;
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        .collage img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
+            z-index: 2;
         }
 
-        /* Animations */
+        /* Animations & Particles */
+        .emoji-large {
+            font-size: 80px;
+            animation: float 2s ease-in-out infinite;
+            margin: 20px 0;
+        }
+
         @keyframes float {
-            0% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
         }
 
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        #star-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
         }
+
+        .star {
+            position: absolute;
+            bottom: -10vh;
+            animation: floatUp linear forwards;
+            opacity: 0.8;
+            color: #f1c40f;
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Cinematic Curtains */
+        #curtain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 20;
+            pointer-events: none; 
+        }
+
+        .curtain {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #3a0000, #5c0000, #3a0000);
+            border-right: 2px solid #f1c40f;
+            border-left: 2px solid #f1c40f;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8) inset;
+            transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #curtain-container.active { display: flex; }
+        #curtain-container.open #curtain-left { transform: translateX(-100%); }
+        #curtain-container.open #curtain-right { transform: translateX(100%); }
     </style>
 </head>
 <body>
 
+    <!-- Star Particles Container -->
+    <div id="star-container"></div>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="assets/song.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- SCREEN 1: Intro (The Yes/No Trick) -->
-    <div id="screen-intro" class="screen active">
-        <h1>PLEASE ACCEPT THIS GIFT, PAPA! 🥺</h1>
+    <div id="step-1" class="screen active">
+        <h2>PLEASE ACCEPT THIS GIFT, PAPA! 🥺</h2>
         <div class="emoji-large">🐧</div>
         <div class="btn-group">
-            <button class="btn-yes" onclick="showScreen('screen-choice')">YES</button>
+            <button class="btn-yes" onclick="nextStep('step-2')">YES</button>
             <button class="btn-no" id="btnNo">NO</button>
         </div>
     </div>
 
-    <!-- SCREEN 2: Choose a Gift -->
-    <div id="screen-choice" class="screen">
+    <!-- SCREEN 2: Transition to Surprise -->
+    <div id="step-2" class="screen">
+        <h2>Ready for the magic? ✨</h2>
+        <p style="margin-bottom: 20px;">Turn up your volume!</p>
+        <button onclick="openCurtainsAndPlay()">OPEN THE GIFT</button>
+    </div>
+
+    <!-- The Grand Curtains -->
+    <div id="curtain-container">
+        <div id="curtain-left" class="curtain"></div>
+        <div id="curtain-right" class="curtain"></div>
+    </div>
+
+    <!-- SCREEN 3: Choose a Gift -->
+    <div id="step-3" class="screen">
         <h2>Choose a Gift Box! 🎁</h2>
-        <p>Har box mein kuch special hai...</p>
+        <p>Har box mein kuch special hai aapke liye...</p>
         <div class="gifts-container">
-            <div class="gift-box" onclick="showScreen('screen-msg')">📦</div>
-            <div class="gift-box" onclick="showScreen('screen-collage')">📦</div>
-            <div class="gift-box" onclick="showScreen('screen-hug')">📦</div>
+            <div class="gift-box" onclick="nextStep('step-msg')">📦</div>
+            <div class="gift-box" onclick="nextStep('step-collage')">📦</div>
+            <div class="gift-box" onclick="nextStep('step-hug')">📦</div>
         </div>
     </div>
 
-    <!-- SCREEN 3: Gift 1 (Message) -->
-    <div id="screen-msg" class="screen">
-        <h2>Happy Father's Day! ✨</h2>
-        <div class="message-text">
-            Papa, Wardha ke un chhote se dino se lekar aaj Nagpur mein meri JEE Advanced ki tayari tak, aap mere sabse bade supporter rahe ho. <br><br>
-            Aapne meri har zarurat puri ki hai. Main aapse bas yahi kehna chahta hoon ki aap best ho, aur main puri mehnat karunga aapko hamesha proud feel karwane ke liye! 
+    <!-- SCREEN 4: Gift 1 (Message) -->
+    <div id="step-msg" class="screen">
+        <div class="message-box">
+            <h2>Happy Father's Day! ✨</h2>
+            <p>Papa, Wardha ke un pyare dino se lekar aaj Nagpur mein meri JEE Advanced ki tayari tak, aap mere sabse bade supporter rahe ho.</p>
+            <p>Aapne meri har zarurat puri ki hai. Main aapse bas yahi kehna chahta hoon ki aap best ho, aur main puri mehnat karunga aapko hamesha proud feel karwane ke liye!</p>
+            <p style="margin-top: 20px; font-weight: 700; color: #f1c40f; font-size: 18px;">- Yugant Bhute</p>
         </div>
-        <button class="btn-back" onclick="showScreen('screen-choice')">Go Back</button>
+        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
     </div>
 
-    <!-- SCREEN 4: Gift 2 (Collage) -->
-    <div id="screen-collage" class="screen">
+    <!-- SCREEN 5: Gift 2 (Collage) -->
+    <div id="step-collage" class="screen">
         <h2>My Superhero! 🦸‍♂️</h2>
         <div class="collage">
             <!-- PICS: Yahan apni aur papa ki pics ka naam dalna -->
-            <img src="papa1.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1531804055935-76f44d7c3621?w=400&auto=format&fit=crop'">
-            <img src="papa2.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1621252179027-94459d278660?w=400&auto=format&fit=crop'">
-            <img src="papa3.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1596215143922-eedece08b6fd?w=400&auto=format&fit=crop'">
-            <img src="papa4.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1508215885820-4585e5610ea0?w=400&auto=format&fit=crop'">
+            <img src="assets/papa1.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1531804055935-76f44d7c3621?w=400&auto=format&fit=crop'">
+            <img src="assets/papa2.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1621252179027-94459d278660?w=400&auto=format&fit=crop'">
+            <img src="assets/papa3.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1596215143922-eedece08b6fd?w=400&auto=format&fit=crop'">
+            <img src="assets/papa4.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1508215885820-4585e5610ea0?w=400&auto=format&fit=crop'">
         </div>
-        <button class="btn-back" onclick="showScreen('screen-choice')">Go Back</button>
+        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
     </div>
 
-    <!-- SCREEN 5: Gift 3 (Virtual Hug) -->
-    <div id="screen-hug" class="screen">
+    <!-- SCREEN 6: Gift 3 (Virtual Hug) -->
+    <div id="step-hug" class="screen">
         <h2>Virtual Hug for You! 🤗</h2>
         <div class="emoji-large">🫂</div>
-        <h3>I LOVE YOU, PAPA! ❤️</h3>
-        <p style="margin-top: 15px; color: #555; font-weight: bold; font-size: 1.2em;">- Yugant Bhute</p>
-        <button class="btn-back" onclick="showScreen('screen-choice')">Go Back</button>
+        <h3 style="color: #f1c40f; font-size: 24px; letter-spacing: 2px;">I LOVE YOU, PAPA! ❤️</h3>
+        <p style="margin-top: 15px; font-weight: bold; font-size: 1.2em;">- Yugant</p>
+        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
     </div>
 
     <script>
         // Screen Navigation Function
-        function showScreen(screenId) {
+        function nextStep(screenId) {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
             document.getElementById(screenId).classList.add('active');
+        }
+
+        // Curtain & Music Logic
+        function openCurtainsAndPlay() {
+            let music = document.getElementById("bg-music");
+            music.play().catch(e => console.log("Audio block: " + e));
+            
+            document.getElementById('step-2').classList.remove('active');
+            const curtainContainer = document.getElementById('curtain-container');
+            curtainContainer.classList.add('active');
+            
+            setTimeout(() => {
+                curtainContainer.classList.add('open');
+                document.getElementById('step-3').classList.add('active');
+            }, 600);
         }
 
         // Trick for the "NO" button so it runs away!
@@ -226,7 +350,7 @@
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             
-            const newX = Math.random() * (windowWidth - 100);
+            const newX = Math.random() * (windowWidth - 150);
             const newY = Math.random() * (windowHeight - 100);
             
             this.style.position = 'fixed';
@@ -238,6 +362,28 @@
         btnNo.addEventListener('click', function() {
             alert('Aise thodi chalega Papa, YES par click karo! 😄');
         });
+
+        // Star Particle Engine
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.innerHTML = '✨'; 
+            
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = Math.random() * 3 + 3 + 's';
+            
+            const size = Math.random() * 15 + 10;
+            star.style.fontSize = size + 'px';
+
+            document.getElementById('star-container').appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 6000);
+        }
+
+        // Generate a new star every 300 milliseconds
+        setInterval(createStar, 300);
     </script>
 
 </body>
