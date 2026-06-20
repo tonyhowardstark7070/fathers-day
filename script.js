@@ -1,6 +1,5 @@
 // --- CUSTOMIZE YOUR DATA HERE ---
-const PAPA_AGE = 46; // Papa ki age daalein
-
+const PAPA_AGE = 46; 
 // Local Folder Images aur Messages
 const balloonData = {
     1: { img: "images/photo1.jpg", text: "The world's most stubborn umbrella-bringer ☂️" },
