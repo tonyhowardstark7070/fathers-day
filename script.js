@@ -2,13 +2,13 @@
 const PAPA_AGE = 46; 
 // Local Folder Images aur Messages
 const balloonData = {
-    1: { img: "images/photo1.jpg", text: "The world's most stubborn umbrella-bringer ☂️" },
-    2: { img: "images/photo2.jpg", text: "Still checks the door locks three times. Every night. 🚪" },
-    3: { img: "images/photo3.jpg", text: "He's home before you even text 'where are you' 📍" }
+    1: { img: "images/photo1.jpg", text: "You were my biggest strength during my toughest phase 💪" },
+    2: { img: "images/photo2.jpg", text: "The ultimate anchor who kept me grounded through all the JEE madness ⚓" },
+    3: { img: "images/photo3.jpg", text: "For handling all my stress and tantrums... thank you for always believing in me ❤️" }
 };
 
 // Lamba Message for typewriter
-const letterText = "Some people carry a room just by walking into it quietly. You're one of them, Papa. There's a steadiness in you that I've leaned on more than I've ever said out loud. May this year give you back some of the stillness you've given everyone else.";
+const letterText = "Some people carry a room just by walking into it quietly. You're one of them, Baba. There's a steadiness in you that I've leaned on more than I've ever said out loud. May this year give you back some of the stillness you've given everyone else.";
 // ---------------------------------
 
 let balloonsPopped = 0;
