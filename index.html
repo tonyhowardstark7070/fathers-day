@@ -3,388 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise for Papa! ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Happy Father's Day</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #0d0d0d;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
-        }
-
-        .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            padding: 20px;
-        }
-
-        .screen.active {
-            display: flex;
-            animation: fadeIn 0.8s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #f1c40f;
-            font-size: 28px;
-        }
-
-        p { color: #ddd; }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            position: relative;
-        }
-
-        button {
-            background: linear-gradient(45deg, #f39c12, #f1c40f);
-            color: #111;
-            border: none;
-            padding: 12px 40px;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            letter-spacing: 1px;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
-        }
-
-        .btn-no {
-            background: #e74c3c;
-            color: white;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-        }
-
-        .btn-no:hover {
-            background: #c0392b;
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
-            transform: none; /* No scaling so it dodges cleanly */
-        }
-
-        .btn-back {
-            margin-top: 40px;
-            background: transparent;
-            border: 2px solid #f1c40f;
-            color: #f1c40f;
-            box-shadow: none;
-        }
-
-        .btn-back:hover {
-            background: #f1c40f;
-            color: #111;
-        }
-
-        /* Gifts Container */
-        .gifts-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .gift-box {
-            font-size: 60px;
-            cursor: pointer;
-            transition: 0.3s;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid rgba(241, 196, 15, 0.3);
-            backdrop-filter: blur(5px);
-        }
-
-        .gift-box:hover {
-            transform: scale(1.1) translateY(-10px);
-            border-color: #f1c40f;
-            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
-            text-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
-        }
-
-        /* Message Box */
-        .message-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 600px;
-            border: 1px solid rgba(241, 196, 15, 0.3);
-            text-align: left;
-        }
-
-        .message-box p {
-            line-height: 1.8;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-
-        /* Collage */
-        .collage {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            max-width: 500px;
-            margin-top: 20px;
-        }
-
-        .collage img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #f1c40f;
-            transition: 0.3s;
-        }
-
-        .collage img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
-            z-index: 2;
-        }
-
-        /* Animations & Particles */
-        .emoji-large {
-            font-size: 80px;
-            animation: float 2s ease-in-out infinite;
-            margin: 20px 0;
-        }
-
+        body { font-family: 'Georgia', serif; background-color: #FDF6ED; }
+        .hidden-screen { display: none; }
+        
+        /* Floating Animation */
+        .float { animation: float 4s ease-in-out infinite; }
+        .float-delay-1 { animation: float 5s ease-in-out infinite 1s; }
+        .float-delay-2 { animation: float 6s ease-in-out infinite 2s; }
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
 
-        #star-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
+        /* Balloon Shape */
+        .balloon {
+            width: 60px; height: 75px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            position: relative; cursor: pointer;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
+        }
+        .balloon::after {
+            content: ""; position: absolute;
+            bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 8px solid inherit;
         }
 
-        .star {
-            position: absolute;
-            bottom: -10vh;
-            animation: floatUp linear forwards;
-            opacity: 0.8;
-            color: #f1c40f;
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
-        }
-
-        @keyframes floatUp {
-            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Cinematic Curtains */
-        #curtain-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            z-index: 20;
-            pointer-events: none; 
-        }
-
-        .curtain {
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, #3a0000, #5c0000, #3a0000);
-            border-right: 2px solid #f1c40f;
-            border-left: 2px solid #f1c40f;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8) inset;
-            transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        #curtain-container.active { display: flex; }
-        #curtain-container.open #curtain-left { transform: translateX(-100%); }
-        #curtain-container.open #curtain-right { transform: translateX(100%); }
+        /* Fade In Animation */
+        .fade-in { animation: fadeIn 0.8s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-<body>
+<body class="h-screen w-screen overflow-hidden flex justify-center items-center bg-gray-100">
 
-    <!-- Star Particles Container -->
-    <div id="star-container"></div>
+    <div class="relative w-full max-w-md h-full bg-[#FDF6ED] shadow-2xl overflow-y-auto overflow-x-hidden">
 
-    <!-- Background Music -->
-    <audio id="bg-music" loop>
-        <source src="assets/song.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- SCREEN 1: Intro (The Yes/No Trick) -->
-    <div id="step-1" class="screen active">
-        <h2>PLEASE ACCEPT THIS GIFT, PAPA! 🥺</h2>
-        <div class="emoji-large">🐧</div>
-        <div class="btn-group">
-            <button class="btn-yes" onclick="nextStep('step-2')">YES</button>
-            <button class="btn-no" id="btnNo">NO</button>
+        <div id="screen-1" class="h-full flex flex-col items-center justify-center p-8 text-center fade-in">
+            <div class="text-6xl mb-4">👔</div>
+            <p class="text-xs tracking-widest text-gray-500 mb-2 uppercase">A Father's Day Surprise</p>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Someone wrote this just for you</h1>
+            <p class="text-sm text-gray-500 mb-10">made with ❤️ by <span class="font-bold text-gray-800">Aapka Naam Yahan Daalein</span></p>
+            <button onclick="showScreen('screen-2'); startCounter();" class="bg-[#A47E5B] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-[#8A674A] transition">
+                Open it 🎁
+            </button>
         </div>
-    </div>
 
-    <!-- SCREEN 2: Transition to Surprise -->
-    <div id="step-2" class="screen">
-        <h2>Ready for the magic? ✨</h2>
-        <p style="margin-bottom: 20px;">Turn up your volume!</p>
-        <button onclick="openCurtainsAndPlay()">OPEN THE GIFT</button>
-    </div>
-
-    <!-- The Grand Curtains -->
-    <div id="curtain-container">
-        <div id="curtain-left" class="curtain"></div>
-        <div id="curtain-right" class="curtain"></div>
-    </div>
-
-    <!-- SCREEN 3: Choose a Gift -->
-    <div id="step-3" class="screen">
-        <h2>Choose a Gift Box! 🎁</h2>
-        <p>Har box mein kuch special hai aapke liye...</p>
-        <div class="gifts-container">
-            <div class="gift-box" onclick="nextStep('step-msg')">📦</div>
-            <div class="gift-box" onclick="nextStep('step-collage')">📦</div>
-            <div class="gift-box" onclick="nextStep('step-hug')">📦</div>
+        <div id="screen-2" class="hidden-screen h-full flex flex-col items-center justify-center p-8 text-center bg-[#2A2320] text-[#D8C3A5]">
+            <p class="text-xs tracking-widest mb-6 uppercase">How many years, exactly</p>
+            <h1 id="counter" class="text-8xl font-serif mb-6">0</h1>
+            <p class="text-sm text-gray-400 mb-10 max-w-xs">YEARS OF DAD JOKES, HUGS, AND SHOWING UP</p>
+            <p class="text-lg text-white mb-8">🎉 Happy Father's Day!</p>
+            <button id="btn-screen-2" onclick="showScreen('screen-3')" class="hidden bg-[#D8C3A5] text-[#2A2320] px-8 py-3 rounded-full font-bold shadow-lg">
+                Open the balloons ✦
+            </button>
         </div>
-    </div>
 
-    <!-- SCREEN 4: Gift 1 (Message) -->
-    <div id="step-msg" class="screen">
-        <div class="message-box">
-            <h2>Happy Father's Day! ✨</h2>
-            <p>Papa, Wardha ke un pyare dino se lekar aaj Nagpur mein meri JEE Advanced ki tayari tak, aap mere sabse bade supporter rahe ho.</p>
-            <p>Aapne meri har zarurat puri ki hai. Main aapse bas yahi kehna chahta hoon ki aap best ho, aur main puri mehnat karunga aapko hamesha proud feel karwane ke liye!</p>
-            <p style="margin-top: 20px; font-weight: 700; color: #f1c40f; font-size: 18px;">- Yugant Bhute</p>
+        <div id="screen-3" class="hidden-screen h-full p-8 relative">
+            <h2 class="text-2xl font-bold text-center mt-10 mb-2 text-gray-800">Pop every balloon 🎈</h2>
+            <p id="balloons-left" class="text-center text-sm text-gray-500 mb-12">3 left to pop</p>
+
+            <div class="relative h-64 w-full">
+                <div id="b-1" onclick="popBalloon(1)" class="balloon bg-red-400 float absolute top-10 left-10" style="border-bottom-color: #f87171;"></div>
+                <div id="b-2" onclick="popBalloon(2)" class="balloon bg-green-700 float-delay-1 absolute top-2 right-12" style="border-bottom-color: #15803d;"></div>
+                <div id="b-3" onclick="popBalloon(3)" class="balloon bg-[#8B5A2B] float-delay-2 absolute bottom-4 left-32" style="border-bottom-color: #8B5A2B;"></div>
+            </div>
+
+            <div id="polaroid-modal" class="hidden absolute inset-0 bg-[#FDF6ED] bg-opacity-95 flex flex-col items-center justify-center p-6 z-50">
+                <div class="bg-white p-4 pb-8 shadow-2xl rounded-sm rotate-2 w-full max-w-sm fade-in">
+                    <img id="polaroid-img" src="" class="w-full h-64 object-cover mb-4 rounded-sm border border-gray-200">
+                    <p id="polaroid-text" class="text-center font-serif text-gray-800 text-lg"></p>
+                </div>
+                <button id="pop-another-btn" onclick="closePolaroid()" class="mt-8 bg-black text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+                    POP ANOTHER ↗
+                </button>
+            </div>
         </div>
-        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
-    </div>
 
-    <!-- SCREEN 5: Gift 2 (Collage) -->
-    <div id="step-collage" class="screen">
-        <h2>My Superhero! 🦸‍♂️</h2>
-        <div class="collage">
-            <!-- PICS: Yahan apni aur papa ki pics ka naam dalna -->
-            <img src="assets/papa1.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1531804055935-76f44d7c3621?w=400&auto=format&fit=crop'">
-            <img src="assets/papa2.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1621252179027-94459d278660?w=400&auto=format&fit=crop'">
-            <img src="assets/papa3.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1596215143922-eedece08b6fd?w=400&auto=format&fit=crop'">
-            <img src="assets/papa4.jpg" alt="Papa and Me" onerror="this.src='https://images.unsplash.com/photo-1508215885820-4585e5610ea0?w=400&auto=format&fit=crop'">
+        <div id="screen-4" class="hidden-screen h-full p-8 flex flex-col overflow-y-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mt-10 mb-6">Dear Papa,</h2>
+            <div class="border-l-2 border-[#A47E5B] pl-4 mb-8 min-h-[200px]">
+                <p id="typewriter-text" class="text-lg text-gray-700 leading-relaxed font-serif"></p>
+            </div>
+            <p class="text-gray-500 italic">With love, <span class="font-bold text-gray-800">Aapka Naam</span> ✦</p>
+            
+            <div class="mt-auto pt-8 pb-4 text-center">
+                <button id="btn-screen-4" onclick="showScreen('screen-5'); triggerConfetti();" class="hidden bg-black text-white px-8 py-3 rounded-full font-bold shadow-lg">
+                    One last thing 🎁
+                </button>
+            </div>
         </div>
-        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
-    </div>
 
-    <!-- SCREEN 6: Gift 3 (Virtual Hug) -->
-    <div id="step-hug" class="screen">
-        <h2>Virtual Hug for You! 🤗</h2>
-        <div class="emoji-large">🫂</div>
-        <h3 style="color: #f1c40f; font-size: 24px; letter-spacing: 2px;">I LOVE YOU, PAPA! ❤️</h3>
-        <p style="margin-top: 15px; font-weight: bold; font-size: 1.2em;">- Yugant</p>
-        <button class="btn-back" onclick="nextStep('step-3')">Go Back to Gifts</button>
+        <div id="screen-5" class="hidden-screen h-full p-8 flex flex-col items-center justify-center text-center fade-in">
+            <div class="bg-white p-4 shadow-2xl rounded-sm rotate-[-2deg] w-full max-w-sm mb-8">
+                <img src="images/final.jpg" class="w-full h-72 object-cover mb-4 rounded-sm border border-gray-200" alt="Final Family Photo">
+                <p class="text-sm font-serif italic text-gray-600">"Some people carry a room just by walking into it quietly... There."</p>
+            </div>
+            <p class="text-lg font-bold text-gray-800">Happy Father's Day!</p>
+            <p class="text-sm text-gray-500 mt-2">Love you always.</p>
+        </div>
+
     </div>
 
     <script>
-        // Screen Navigation Function
-        function nextStep(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // Curtain & Music Logic
-        function openCurtainsAndPlay() {
-            let music = document.getElementById("bg-music");
-            music.play().catch(e => console.log("Audio block: " + e));
-            
-            document.getElementById('step-2').classList.remove('active');
-            const curtainContainer = document.getElementById('curtain-container');
-            curtainContainer.classList.add('active');
-            
-            setTimeout(() => {
-                curtainContainer.classList.add('open');
-                document.getElementById('step-3').classList.add('active');
-            }, 600);
-        }
-
-        // Trick for the "NO" button so it runs away!
-        const btnNo = document.getElementById('btnNo');
+        // --- CUSTOMIZE YOUR DATA HERE ---
+        const PAPA_AGE = 55; // Papa ki age daalein
         
-        btnNo.addEventListener('mouseover', function() {
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
-            
-            const newX = Math.random() * (windowWidth - 150);
-            const newY = Math.random() * (windowHeight - 100);
-            
-            this.style.position = 'fixed';
-            this.style.left = newX + 'px';
-            this.style.top = newY + 'px';
-        });
+        // Local Folder Images aur Messages
+        const balloonData = {
+            1: { img: "images/photo1.jpg", text: "The world's most stubborn umbrella-bringer ☂️" },
+            2: { img: "images/photo2.jpg", text: "Still checks the door locks three times. Every night. 🚪" },
+            3: { img: "images/photo3.jpg", text: "He's home before you even text 'where are you' 📍" }
+        };
 
-        // Fallback alert if they click NO on mobile
-        btnNo.addEventListener('click', function() {
-            alert('Aise thodi chalega Papa, YES par click karo! 😄');
-        });
+        // Lamba Message for typewriter
+        const letterText = "Some people carry a room just by walking into it quietly. You're one of them, Papa. There's a steadiness in you that I've leaned on more than I've ever said out loud. May this year give you back some of the stillness you've given everyone else.";
+        // ---------------------------------
 
-        // Star Particle Engine
-        function createStar() {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.innerHTML = '✨'; 
-            
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.animationDuration = Math.random() * 3 + 3 + 's';
-            
-            const size = Math.random() * 15 + 10;
-            star.style.fontSize = size + 'px';
+        let balloonsPopped = 0;
 
-            document.getElementById('star-container').appendChild(star);
-
-            setTimeout(() => {
-                star.remove();
-            }, 6000);
+        function showScreen(screenId) {
+            document.querySelectorAll('.hidden-screen, div[id^="screen-"]:not(.hidden-screen)').forEach(el => el.style.display = 'none');
+            document.getElementById(screenId).style.display = screenId === 'screen-1' || screenId === 'screen-2' || screenId === 'screen-5' ? 'flex' : 'block';
         }
 
-        // Generate a new star every 300 milliseconds
-        setInterval(createStar, 300);
-    </script>
+        // Screen 2: Counter Animation
+        function startCounter() {
+            let count = 0;
+            const counterEl = document.getElementById('counter');
+            const interval = setInterval(() => {
+                count += Math.floor(Math.random() * 3) + 1; // Count fast
+                if (count >= PAPA_AGE) {
+                    count = PAPA_AGE;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('btn-screen-2').classList.remove('hidden');
+                    }, 500);
+                }
+                counterEl.innerText = count;
+            }, 30);
+        }
 
+        // Screen 3: Balloon Logic
+        function popBalloon(id) {
+            document.getElementById(`b-${id}`).style.display = 'none';
+            document.getElementById('polaroid-img').src = balloonData[id].img;
+            document.getElementById('polaroid-text').innerText = balloonData[id].text;
+            document.getElementById('polaroid-modal').classList.remove('hidden');
+            
+            balloonsPopped++;
+            document.getElementById('balloons-left').innerText = `${3 - balloonsPopped} left to pop`;
+        }
+
+        function closePolaroid() {
+            document.getElementById('polaroid-modal').classList.add('hidden');
+            if (balloonsPopped === 3) {
+                // Change button to next screen if all popped
+                const btn = document.getElementById('pop-another-btn');
+                btn.innerText = "Read Letter 💌";
+                btn.onclick = () => { showScreen('screen-4'); startTypewriter(); };
+                btn.onclick(); // Auto transition
+            }
+        }
+
+        // Screen 4: Typewriter Effect
+        function startTypewriter() {
+            let i = 0;
+            const speed = 40; // Typing speed
+            const el = document.getElementById('typewriter-text');
+            el.innerHTML = "";
+            function type() {
+                if (i < letterText.length) {
+                    el.innerHTML += letterText.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    document.getElementById('btn-screen-4').classList.remove('hidden');
+                }
+            }
+            type();
+        }
+
+        // Screen 5: Confetti
+        function triggerConfetti() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#A47E5B', '#2A2320', '#D8C3A5']
+                });
+                confetti({
+                    particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#A47E5B', '#2A2320', '#D8C3A5']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
 </body>
 </html>
